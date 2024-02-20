@@ -64,7 +64,7 @@ hr{
 }
 
 .keyboard-row{
-    width: 450px;
+    width: 530px;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -74,12 +74,12 @@ hr{
 .key-tile{
     /* Box */
     border: 1px solid lightgray;
-    width: 36px;
-    height: 40px;
+    width: 45px;
+    height: 51px;
     margin: 3px;
 
     /* Text */
-    font-size: 20px;
+    font-size: 27px;
     font-weight: bold;
     display: flex;
     justify-content: center;
@@ -90,7 +90,7 @@ hr{
     /* Box */
     border: 1px solid lightgray;
     width: 76px;
-    height: 40px;
+    height: 51px;
     margin: 3px;
 
     /* Text */
