@@ -20,6 +20,18 @@ window.onload = function(){
     initalize();
 }
 
+function showSnackBar(text) {
+    // Get the snackbar DIV
+    var snackbar = document.getElementById("snackbar");
+    
+    // Add the "show" class to DIV
+    snackbar.textContent = text;
+    snackbar.className = "show";
+    
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+  }
+
 function initalize(){
     //create game board
     for(let r = 0; r < height; r++){
@@ -36,7 +48,7 @@ function initalize(){
     // Create the key board
     let keyboard = [
         ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-        ["A", "S", "D", "F", "G", "H", "J", "K", "L", " "],
+        ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
         ["Enter", "Z", "X", "C", "V", "B", "N", "M", "⌫" ]
     ]
 
@@ -62,10 +74,10 @@ function initalize(){
 
             keyTile.addEventListener("click", processKey);
         
-
         if (key == "Enter"){
             keyTile.classList.add("enter-key-tile");
-        } else{
+        }
+        else{
             keyTile.classList.add("key-tile");
         }
         keyboardRow.appendChild(keyTile);
@@ -110,14 +122,16 @@ function processInput(e){
 
     if(!gameOver && row == height){
         gameOver = true;
-        document.getElementById("answer").innerText = word;
+        //document.getElementById("answer").innerText = word;
+        window.alert("The answer was: " + word);
+        
     }
     
 }
 
 function update(){
     let guess = "";
-    document.getElementById("answer").innerText = "";
+    //document.getElementById("answer").innerText = "";
 
     //string up the guess word
     for(let c = 0; c< width; c++){
@@ -127,8 +141,12 @@ function update(){
     }
 
     guess = guess.toLowerCase();
-    if(!guessList.includes(guess)){
-        document.getElementById("answer").innerText = "Not in word list";
+    if(guess.length < 5){
+        showSnackBar("Not enough letters!");
+        return;
+    }
+    else if(!guessList.includes(guess)){
+        showSnackBar("Not in word list!");
         return;
     }
 
@@ -194,3 +212,4 @@ function update(){
     row +=1; //start new row
     col = 0; //start at 0 in new row
 }
+
