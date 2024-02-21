@@ -47,9 +47,9 @@ function initalize(){
 
     // Create the key board
     let keyboard = [
-        ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+        ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P"],
         ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-        ["Enter", "Z", "X", "C", "V", "B", "N", "M", "⌫" ]
+        ["Enter", "Y", "X", "C", "V", "B", "N", "M", "⌫" ]
     ]
 
     for(let i = 0; i < keyboard.length; i++){
@@ -122,16 +122,12 @@ function processInput(e){
 
     if(!gameOver && row == height){
         gameOver = true;
-        //document.getElementById("answer").innerText = word;
-        window.alert("The answer was: " + word);
-        
+        showPopupWindow("Better luck next time!","The answer was: "+ word);
     }
-    
 }
 
 function update(){
     let guess = "";
-    //document.getElementById("answer").innerText = "";
 
     //string up the guess word
     for(let c = 0; c< width; c++){
@@ -149,7 +145,6 @@ function update(){
         showSnackBar("Not in word list!");
         return;
     }
-
 
     //start processing game
     let correct = 0;
@@ -183,6 +178,7 @@ function update(){
 
         if(correct == width){
             gameOver = true;
+            showPopupWindow("Congratulations!","");
         }
     }
 
@@ -208,8 +204,30 @@ function update(){
             }
         }
     }
-    
     row +=1; //start new row
     col = 0; //start at 0 in new row
 }
 
+function showPopupWindow(title,text){
+    // Get the elements by their ID
+    var popupWindow = document.getElementById("popup-window");
+    var newgameButton = document.getElementById("newgame-button");
+    var ptitle = document.getElementById("popup-title");
+    var ptext = document.getElementById("popup-text");
+    
+    ptitle.textContent = title;
+    ptext.textContent = text;
+    popupWindow.style.display = "block";
+    // Hide the pop-up window when the close button is clicked
+    newgameButton.addEventListener("click", function() {
+        popupWindow.style.display = "none";
+        /*var word = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
+        console.log(word);
+        height = 6; //number of guesses
+        width = 5; //length of the word
+        row = 0; //current guess(attempt number)
+        col = 0; //current letter for that attempt
+        gameOver = false;*/
+        location.reload();
+    });
+}
