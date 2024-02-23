@@ -20,12 +20,14 @@ hr{
 }
 
 #board{
-    width: 350px;
+    width: 345px;
     height: 420px;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 0px;
+    justify-content: center;
+    align-items: center; 
 }
 
 .tile{
@@ -121,7 +123,7 @@ hr{
   }
   
   /* Show the snackbar when clicking on a button (class added with JavaScript) */
-  #snackbar.show {
+#snackbar.show {
     visibility: visible; /* Show the snackbar */
     -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
@@ -148,15 +150,15 @@ hr{
     to {top: 0; opacity: 0;}
   }
 
-  #popup-window {
+#popup-window {
     position: fixed;
-    width: 360px;
-    height: 410px;
+    width: 380px;
+    height: 460px;
     background: white;
     border: 1px solid black;
     padding: 10px;
     margin: 0 auto; 
-    top: 50%; 
+    top: 44%; 
     left: 50%; 
     transform: translate(-50%, -50%); 
     z-index: 10;
@@ -171,4 +173,10 @@ hr{
     background-color: rgb(230, 230, 230);
     border-radius: 5px;
     font-size: 16px;
+    margin-bottom: 15px;
+}
+
+#result, #streakNo, #maxStreakNo{
+    margin: 10px;
+    display: inline-block;
 }
