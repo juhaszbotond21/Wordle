@@ -76,21 +76,21 @@ function initalize(){
 
             keyTile.addEventListener("click", processKey);
         
-        if (key == "Enter"){
-            keyTile.classList.add("enter-key-tile");
+            if (key == "Enter"){
+                keyTile.classList.add("enter-key-tile");
+            }
+            else{
+                keyTile.classList.add("key-tile");
+            }
+            keyboardRow.appendChild(keyTile);
         }
-        else{
-            keyTile.classList.add("key-tile");
-        }
-        keyboardRow.appendChild(keyTile);
-    }
     document.body.appendChild(keyboardRow);
-}
-
+    }
     //listen for keypress
-    document.addEventListener("keyup", (e) => {
-        processInput(e);
-    })
+    document.addEventListener("keyup", (e) => {processInput(e);})
+
+    var stats = document.getElementById("statsIcon");
+    stats.addEventListener("click", function(){ showPopupWindow("Statistics","",false),displayStats() });
 }
 
 function processKey(){
@@ -124,7 +124,7 @@ function processInput(e){
 
     if(!gameOver && row == height){
         gameOver = true;
-        showPopupWindow("Better luck next time!","The answer was: "+ word);
+        showPopupWindow("Better luck next time!","The answer was: "+ word,true);
         storeAttemptCounts("failed",true);
     }
 }
@@ -181,7 +181,7 @@ function update(){
 
         if(correct == width){
             gameOver = true;
-            showPopupWindow("Congratulations!","");
+            showPopupWindow("Congratulations!","",true);
             storeStats(row+1);
         }
     }
@@ -212,21 +212,30 @@ function update(){
     col = 0; //start at 0 in new row
 }
 
-function showPopupWindow(title,text){
+function showPopupWindow(title,text,isAfterGame){
     // Get the elements by their ID
     var popupWindow = document.getElementById("popup-window");
-    var newgameButton = document.getElementById("newgame-button");
+    var newgameButton = document.getElementById("newgame-button-popupwindow");
     var ptitle = document.getElementById("popup-title");
     var ptext = document.getElementById("popup-text");
     
     ptitle.textContent = title;
     ptext.textContent = text;
-
-    popupWindow.style.display = "block";
-    newgameButton.addEventListener("click", function() {
-        //popupWindow.style.display = "none";
-        location.reload();
-    });
+    
+    if(isAfterGame){
+        popupWindow.style.display = "block";
+        newgameButton.textContent = "New game";
+        newgameButton.addEventListener("click", function() {
+            location.reload();
+        });
+    }
+    else{
+        popupWindow.style.display = "block";
+        newgameButton.textContent = "Close";
+        newgameButton.addEventListener("click", function() {
+            popupWindow.style.display = "none";
+        });
+    }
 }
 
 function storeStats(numberOfTries){
@@ -292,5 +301,14 @@ function storeAttemptCounts(attemptsNo,isFailed){
     numberOfGames = Number(numberOfWins) + Number(numberOfLosses);
     document.getElementById("gamesCount").innerHTML = "Games played: " + numberOfGames;
     document.getElementById("winPercentage").innerHTML = "Win percentage: " + ((numberOfWins/numberOfGames)*100).toFixed() + " %";
-   
+}
+
+function displayStats(){
+    document.getElementById("streakNo").innerHTML = "Current streak: " + localStorage.getItem("streak");
+    document.getElementById("maxStreakNo").innerHTML = "Max streak: " + localStorage.getItem("maxStreak");
+    numberOfWins = Number(localStorage.getItem("winsCount"));
+    numberOfLosses = Number(localStorage.getItem("lossCount"));
+    numberOfGames = Number(numberOfWins) + Number(numberOfLosses);
+    document.getElementById("gamesCount").innerHTML = "Games played: " + numberOfGames;
+    document.getElementById("winPercentage").innerHTML = "Win percentage: " + ((numberOfWins/numberOfGames)*100).toFixed() + " %";
 }

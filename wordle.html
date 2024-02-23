@@ -4,12 +4,18 @@
         <title>Wordle</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=0, user-scalable = no">
+        <script src="https://kit.fontawesome.com/3b70c6ef37.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="wordle.css">
         <script type="text/javascript" src="wordle.js"></script>
+       
 
     </head>
     <body>
-        <h1 id="title">Wordle</h1>
+        <div id="header">
+            <button id="againIcon" class="againIcon" title="Start new game"><span class="fa-solid fa-rotate-left"></span></button>
+            <h1 id="title">Wordle</h1>
+            <button id="statsIcon" class="statsIcon" title="Statistics"><span class="fa fa-chart-simple"></span></button>
+        </div>
         <hr>
         <div id="snackbar"></div>
         <br>
@@ -17,7 +23,7 @@
         <div id="popup-window">
             <h1 id="popup-title"></h1>
             <p id="popup-text"></p>
-            <button id="newgame-button">New Game</button><br>
+            <button id="newgame-button-popupwindow">New Game</button><br>
             <div id="result"></div>
             <div id="streakNo"></div>
             <div id="maxStreakNo"></div>
