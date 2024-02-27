@@ -87,10 +87,39 @@ function initalize(){
     document.body.appendChild(keyboardRow);
     }
     //listen for keypress
-    document.addEventListener("keyup", (e) => {processInput(e);})
+    document.addEventListener("keyup", (e) => {
+        processInput(e);
+    })
 
     var stats = document.getElementById("statsIcon");
-    stats.addEventListener("click", function(){ showPopupWindow("Statistics","",false),displayStats() });
+    stats.addEventListener("click", function(){
+        showPopupWindow("Statistics","",false),displayStats();
+    });
+
+    var forefit = document.getElementById("againIcon");
+    forefit.addEventListener("click", function(){ 
+        const fDialog = document.getElementById("forefitDialog");
+        const confirmBtn = document.getElementById("forefitBtn");
+        const cancelBtn = document.getElementById("cancelBtn");
+
+        fDialog.showModal();
+        
+        cancelBtn.addEventListener("click", (event) => {
+            //console.log("close");
+            });
+
+        confirmBtn.addEventListener("click", (event) => {
+            localStorage.setItem("streak", 0);
+            numberOfLosses = Number(localStorage.getItem("lossCount")) + 1;
+            localStorage.setItem("lossCount", numberOfLosses); 
+            //console.log("confirm");
+        });
+    });
+}
+
+// JavaScript to close the popup window
+function closePopupWindow() {
+    document.body.classList.remove('popup-open', 'no-scroll');
 }
 
 function processKey(){
@@ -218,6 +247,8 @@ function showPopupWindow(title,text,isAfterGame){
     var newgameButton = document.getElementById("newgame-button-popupwindow");
     var ptitle = document.getElementById("popup-title");
     var ptext = document.getElementById("popup-text");
+
+    document.body.classList.add('popup-open', 'no-scroll');
     
     ptitle.textContent = title;
     ptext.textContent = text;
@@ -234,6 +265,7 @@ function showPopupWindow(title,text,isAfterGame){
         newgameButton.textContent = "Close";
         newgameButton.addEventListener("click", function() {
             popupWindow.style.display = "none";
+            document.body.classList.remove('popup-open', 'no-scroll');
         });
     }
 }

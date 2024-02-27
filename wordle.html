@@ -7,8 +7,6 @@
         <script src="https://kit.fontawesome.com/3b70c6ef37.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="wordle.css">
         <script type="text/javascript" src="wordle.js"></script>
-       
-
     </head>
     <body>
         <div id="header">
@@ -29,7 +27,19 @@
             <div id="maxStreakNo"></div>
             <div id="gamesCount"></div>
             <div id="winPercentage"></div>
-          </div>
+        </div>
+        <div class="popup-overlay"></div>
         <br>
+        <dialog id="forefitDialog">
+            <form>
+            <p id="dialogText1">If you give up you will lose your streak!</p>
+            <p id="dialogText2">Are you sure you want to forefit?</p>
+            <div>
+                <button id="cancelBtn" formmethod="dialog">Play on</button>
+                <button id="forefitBtn">Forefit</button>
+            </div>
+            </form>
+        </dialog>
+        <output></output>
     </body>
 </html>
