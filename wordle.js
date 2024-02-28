@@ -101,20 +101,47 @@ function initalize(){
         const fDialog = document.getElementById("forefitDialog");
         const confirmBtn = document.getElementById("forefitBtn");
         const cancelBtn = document.getElementById("cancelBtn");
+        var dialogText1 = document.getElementById("dialogText1");
+        var dialogText2 = document.getElementById("dialogText2");
+        var confirmButton = document.getElementById("forefitBtn");
+        var cancelButton = document.getElementById("cancelBtn");
 
         fDialog.showModal();
-        
-        cancelBtn.addEventListener("click", (event) => {
-            //console.log("close");
-            });
 
-        confirmBtn.addEventListener("click", (event) => {
-            localStorage.setItem("streak", 0);
-            numberOfLosses = Number(localStorage.getItem("lossCount")) + 1;
-            localStorage.setItem("lossCount", numberOfLosses); 
-            //console.log("confirm");
+        if(gameOver){
+            dialogText1.textContent = "Start new game?";
+            dialogText2.textContent = "";
+            confirmButton.textContent = "New game";
+            cancelButton.textContent = "Close";
+            
+            confirmBtn.addEventListener("click", () => {
+                location.reload();
+            });
+        }
+        else{
+            dialogText1.textContent = "If you give up you will lose your streak!";
+            dialogText2.textContent = "Are you sure you want to forefit?";
+            confirmButton.textContent = "Forefit";
+            cancelButton.textContent = "Play on";
+
+            confirmBtn.addEventListener("click", () => {
+                localStorage.setItem("streak", 0);
+                numberOfLosses = Number(localStorage.getItem("lossCount")) + 1;
+                localStorage.setItem("lossCount", numberOfLosses);
+                localStorage.setItem("forefitWord",word);
+            });
+        }
+        
+        cancelBtn.addEventListener("click", () => {
+            //console.log("close");
         });
     });
+
+    forefitWord = localStorage.getItem("forefitWord");
+    if(forefitWord != "" || forefitWord == null){
+        showSnackBar("The word was: " + forefitWord);
+        localStorage.setItem("forefitWord","");
+    }
 }
 
 // JavaScript to close the popup window
@@ -155,6 +182,7 @@ function processInput(e){
         gameOver = true;
         showPopupWindow("Better luck next time!","The answer was: "+ word,true);
         storeAttemptCounts("failed",true);
+        localStorage.setItem("forefitWord","");
     }
 }
 
@@ -212,6 +240,7 @@ function update(){
             gameOver = true;
             showPopupWindow("Congratulations!","",true);
             storeStats(row+1);
+            localStorage.setItem("forefitWord", "");
         }
     }
 
@@ -245,6 +274,7 @@ function showPopupWindow(title,text,isAfterGame){
     // Get the elements by their ID
     var popupWindow = document.getElementById("popup-window");
     var newgameButton = document.getElementById("newgame-button-popupwindow");
+    var hideButton = document.getElementById("hide-popupwindow-button");
     var ptitle = document.getElementById("popup-title");
     var ptext = document.getElementById("popup-text");
 
@@ -259,11 +289,17 @@ function showPopupWindow(title,text,isAfterGame){
         newgameButton.addEventListener("click", function() {
             location.reload();
         });
+        newgameButton.style.display = "inline-block";
+        hideButton.addEventListener("click", function() {
+            popupWindow.style.display = "none";
+            document.body.classList.remove('popup-open', 'no-scroll');
+            newgameButton.style.display = "none";
+        });
     }
     else{
         popupWindow.style.display = "block";
-        newgameButton.textContent = "Close";
-        newgameButton.addEventListener("click", function() {
+        hideButton.textContent = "Close";
+        hideButton.addEventListener("click", function() {
             popupWindow.style.display = "none";
             document.body.classList.remove('popup-open', 'no-scroll');
         });

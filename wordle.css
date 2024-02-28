@@ -197,6 +197,17 @@ color: rgb(95, 94, 94);
 }
 
 #newgame-button-popupwindow { 
+    display: none;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: rgb(230, 230, 230);
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+#hide-popupwindow-button { 
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
