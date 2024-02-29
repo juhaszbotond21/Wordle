@@ -142,6 +142,8 @@ function initalize(){
         showSnackBar("The word was: " + forefitWord);
         localStorage.setItem("forefitWord","");
     }
+    
+    createChart();
 }
 
 // JavaScript to close the popup window
@@ -240,6 +242,8 @@ function update(){
             gameOver = true;
             showPopupWindow("Congratulations!","",true);
             storeStats(row+1);
+            document.getElementById("chart").innerHTML = "";
+            createChart(row+1);
             localStorage.setItem("forefitWord", "");
         }
     }
@@ -271,7 +275,6 @@ function update(){
 }
 
 function showPopupWindow(title,text,isAfterGame){
-    // Get the elements by their ID
     var popupWindow = document.getElementById("popup-window");
     var newgameButton = document.getElementById("newgame-button-popupwindow");
     var hideButton = document.getElementById("hide-popupwindow-button");
@@ -290,6 +293,7 @@ function showPopupWindow(title,text,isAfterGame){
             location.reload();
         });
         newgameButton.style.display = "inline-block";
+        hideButton.textContent = "Show board";
         hideButton.addEventListener("click", function() {
             popupWindow.style.display = "none";
             document.body.classList.remove('popup-open', 'no-scroll');
@@ -331,7 +335,7 @@ function storeStats(numberOfTries){
                 storeAttemptCounts("failed",true);
         }
       } else {
-        document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+        alert("Sorry, your browser does not support Web Storage...");
       }
 }
 
@@ -339,8 +343,6 @@ function storeAttemptCounts(attemptsNo,isFailed){
     //Store
     attNo = Number(localStorage.getItem(attemptsNo)) + 1;
     localStorage.setItem(attemptsNo, attNo);
-    //Retrieve
-    document.getElementById("result").innerHTML = localStorage.getItem(attemptsNo);
     //streak
     if(isFailed == false){
         streak = Number(localStorage.getItem("streak")) + 1;
@@ -379,4 +381,73 @@ function displayStats(){
     numberOfGames = Number(numberOfWins) + Number(numberOfLosses);
     document.getElementById("gamesCount").innerHTML = "Games played: " + numberOfGames;
     document.getElementById("winPercentage").innerHTML = "Win percentage: " + ((numberOfWins/numberOfGames)*100).toFixed() + " %";
+}
+
+function createChart(attemptNum){
+    var parentDiv = document.getElementById("chart");
+
+    for (var i = 1; i <= 6; i++) {
+        var wrapperDiv = document.createElement("div");
+        var newDiv = document.createElement("div");
+        newDiv.id = i;
+        newDiv.classList.add("chartElement");
+        switch(i){
+            case 1:
+                chartAttemptSize(newDiv,"attempts1");
+                break;
+            case 2:
+                chartAttemptSize(newDiv,"attempts2");
+                break;
+            case 3:
+                chartAttemptSize(newDiv,"attempts3");
+                break;
+            case 4:
+                chartAttemptSize(newDiv,"attempts4");
+                break;
+            case 5:
+                chartAttemptSize(newDiv,"attempts5");
+                break;
+            case 6:
+                chartAttemptSize(newDiv,"attempts6");
+                break;
+            default: 
+                break;
+        }
+        if(i == attemptNum){
+            var attemptsNumber = Number(localStorage.getItem("attempts"+attemptNum));
+            var numOfWins = Number(localStorage.getItem("winsCount"));
+            var percent = (attemptsNumber/numOfWins)*100;
+            newDiv.setAttribute("style","background-color: #6AAA64; width:"+percent+"%");
+        }
+
+        var index = document.createElement("span");
+        index.classList.add("index");
+        index.textContent = i;
+
+        wrapperDiv.classList.add("wrapperDiv");
+
+        wrapperDiv.appendChild(index);
+        wrapperDiv.appendChild(newDiv);
+        parentDiv.appendChild(wrapperDiv);
+    }
+}
+
+function chartAttemptSize(div, attemptNumber){
+    var attemptNum = Number(localStorage.getItem(attemptNumber));
+    var numOfWins = Number(localStorage.getItem("winsCount"));
+    var percent = (attemptNum/numOfWins)*100;
+    if(attemptNum != 0){
+        if(percent >= 1){
+            div.textContent = attemptNum;
+            div.setAttribute("style","width:"+percent+"%");
+        }
+        else{
+            div.textContent = attemptNum;
+            div.setAttribute("style","width: 1%");
+        }
+    }
+    else{
+        div.textContent = "";
+        div.setAttribute("style","width: 0px");
+    }
 }
