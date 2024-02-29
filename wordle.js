@@ -138,7 +138,7 @@ function initalize(){
     });
 
     forefitWord = localStorage.getItem("forefitWord");
-    if(forefitWord != "" || forefitWord == null){
+    if(forefitWord != "" && forefitWord != null){
         showSnackBar("The word was: " + forefitWord);
         localStorage.setItem("forefitWord","");
     }
