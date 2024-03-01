@@ -21,10 +21,24 @@
         <div id="popup-window">
             <h1 id="popup-title"></h1>
             <p id="popup-text"></p>
-            <div id="streakNo"></div>
-            <div id="maxStreakNo"></div>
-            <div id="gamesCount"></div>
-            <div id="winPercentage"></div>
+            <ul id="container">
+                <li class="statsContainer">
+                    <div id="gamesCount" class="statNum"></div>
+                    <div id="gamesCountText" class="statText">Games played</div>
+                </li>
+                <li class="statsContainer">
+                    <div id="winPercentage" class="statNum"></div>
+                    <div id="winPercentageText" class="statText">Win %</div>
+                </li>
+                <li class="statsContainer">
+                    <div id="streakNo" class="statNum"></div>
+                    <div id="streakNoText" class="statText">Current streak</div>
+                </li>
+                <li class="statsContainer">
+                    <div id="maxStreakNo" class="statNum"></div>
+                    <div id="maxStreakNoText" class="statText">Max streak</div>
+                </li>
+            </ul>
             <p id="chartTitle">Guess Distribution</p>
             <div id="chart"></div>
             <button id="newgame-button-popupwindow">New Game</button><br>

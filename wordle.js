@@ -357,30 +357,30 @@ function storeAttemptCounts(attemptsNo,isFailed){
         numberOfLosses = Number(localStorage.getItem("lossCount")) + 1;
         localStorage.setItem("lossCount", numberOfLosses); 
     }
-    document.getElementById("streakNo").innerHTML = "Current streak: " + localStorage.getItem("streak");
+    document.getElementById("streakNo").innerHTML = localStorage.getItem("streak");
     //maxStreak
     streak = Number(localStorage.getItem("streak"));
     maxStreak = Number(localStorage.getItem("maxStreak"));
     if(maxStreak <= streak){
         localStorage.setItem("maxStreak", streak);
     }
-    document.getElementById("maxStreakNo").innerHTML = "Max streak: " + localStorage.getItem("maxStreak");
+    document.getElementById("maxStreakNo").innerHTML = localStorage.getItem("maxStreak");
     //display wincount and win%
     numberOfWins = Number(localStorage.getItem("winsCount"));
     numberOfLosses = Number(localStorage.getItem("lossCount"));
     numberOfGames = Number(numberOfWins) + Number(numberOfLosses);
-    document.getElementById("gamesCount").innerHTML = "Games played: " + numberOfGames;
-    document.getElementById("winPercentage").innerHTML = "Win percentage: " + ((numberOfWins/numberOfGames)*100).toFixed() + " %";
+    document.getElementById("gamesCount").innerHTML = numberOfGames;
+    document.getElementById("winPercentage").innerHTML = ((numberOfWins/numberOfGames)*100).toFixed();
 }
 
 function displayStats(){
-    document.getElementById("streakNo").innerHTML = "Current streak: " + localStorage.getItem("streak");
-    document.getElementById("maxStreakNo").innerHTML = "Max streak: " + localStorage.getItem("maxStreak");
+    document.getElementById("streakNo").innerHTML = localStorage.getItem("streak");
+    document.getElementById("maxStreakNo").innerHTML = localStorage.getItem("maxStreak");
     numberOfWins = Number(localStorage.getItem("winsCount"));
     numberOfLosses = Number(localStorage.getItem("lossCount"));
     numberOfGames = Number(numberOfWins) + Number(numberOfLosses);
-    document.getElementById("gamesCount").innerHTML = "Games played: " + numberOfGames;
-    document.getElementById("winPercentage").innerHTML = "Win percentage: " + ((numberOfWins/numberOfGames)*100).toFixed() + " %";
+    document.getElementById("gamesCount").innerHTML = numberOfGames;
+    document.getElementById("winPercentage").innerHTML = ((numberOfWins/numberOfGames)*100).toFixed();
 }
 
 function createChart(attemptNum){
