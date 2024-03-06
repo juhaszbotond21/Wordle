@@ -13,9 +13,8 @@ var guessList = ["aahed", "aalii", "aargh", "aarti", "abaca", "abaci", "abacs", 
 guessList = guessList.concat(wordList);
 
 
-//var word = "SQUID";
 var word = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
-console.log(word);
+//console.log(word);
 
 window.onload = function(){
     initalize();
@@ -141,6 +140,14 @@ function initalize(){
     if(forefitWord != "" && forefitWord != null){
         showSnackBar("The word was: " + forefitWord);
         localStorage.setItem("forefitWord","");
+    }
+
+    //make streak 0 instead of null on first use
+    streak = localStorage.getItem("streak");
+    maxStreak = localStorage.getItem("maxStreak");
+    if(streak == null && maxStreak == null){
+        localStorage.setItem("streak",0);
+        localStorage.setItem("maxStreak",0);
     }
     
     createChart();
@@ -370,7 +377,13 @@ function storeAttemptCounts(attemptsNo,isFailed){
     numberOfLosses = Number(localStorage.getItem("lossCount"));
     numberOfGames = Number(numberOfWins) + Number(numberOfLosses);
     document.getElementById("gamesCount").innerHTML = numberOfGames;
-    document.getElementById("winPercentage").innerHTML = ((numberOfWins/numberOfGames)*100).toFixed();
+    if(numberOfGames != 0){
+        document.getElementById("winPercentage").innerHTML = ((numberOfWins/numberOfGames)*100).toFixed();
+    }
+    else{
+        document.getElementById("winPercentage").innerHTML = 0;
+    }
+    
 }
 
 function displayStats(){
@@ -380,7 +393,12 @@ function displayStats(){
     numberOfLosses = Number(localStorage.getItem("lossCount"));
     numberOfGames = Number(numberOfWins) + Number(numberOfLosses);
     document.getElementById("gamesCount").innerHTML = numberOfGames;
-    document.getElementById("winPercentage").innerHTML = ((numberOfWins/numberOfGames)*100).toFixed();
+    if(numberOfGames != 0){
+        document.getElementById("winPercentage").innerHTML = ((numberOfWins/numberOfGames)*100).toFixed();
+    }
+    else{
+        document.getElementById("winPercentage").innerHTML = 0;
+    }
 }
 
 function createChart(attemptNum){
